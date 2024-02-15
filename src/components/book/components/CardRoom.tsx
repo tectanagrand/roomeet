@@ -33,20 +33,31 @@ export const CardRoom = ({
   }
   return (
     <Badge
-      badgeContent={<CheckBadgeIcon className="h-4 w-4 p-0" />}
+      badgeContent={<CheckBadgeIcon className="h-8 w-8 p-0" />}
       color="primary"
       invisible={!(roomInfo.id === selectedId)}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      sx={{
+        "& .MuiBadge-badge": {
+          right: 30,
+          height: 40,
+          width: 40,
+        },
+      }}
     >
       <Button
         sx={{ alignItems: "start", justifyContent: "start" }}
         onClick={() => onClickCard(roomInfo.id)}
         className={clsx(
-          "h-44 md:h-52 w-36 md:w-44 rounded-xl hover:bg-slate-300 focus:bg-slate-500 flex flex-col p-3 text-neutral-800 text-left",
+          "h-52 w-44 mr-4 rounded-xl hover:bg-slate-300 focus:bg-slate-500 flex flex-col p-3 text-neutral-800 text-left",
           roomInfo.id === selectedId ? "bg-slate-500" : "bg-slate-400",
           error && "border-red-500 border-2 border-solid"
         )}
       >
-        <p className="md:text-xl my-0 font-semibold">{roomInfo.name}</p>
+        <p className="text-xl my-0 font-semibold">{roomInfo.name}</p>
         <div className="flex text-xs items-center gap-1">
           <UserIcon className="h-5 w-5 " />
           <p className="my-0">Capacity : {roomInfo.capacity}</p>
