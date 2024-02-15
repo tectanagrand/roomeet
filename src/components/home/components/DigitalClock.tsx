@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 
 export default function DigitalClock() {
   const rightNow = new Date();
-  const [hour, setHour] = useState<any>(date.format(rightNow, "HH"));
-  const [minute, setMinute] = useState<any>(date.format(rightNow, "mm"));
-  const [dateNow, setDate] = useState<any>(
-    date.format(rightNow, "eeee, do MMMM yyyy")
-  );
+  const [hour, setHour] = useState<any>("");
+  const [minute, setMinute] = useState<any>("");
+  const [dateNow, setDate] = useState<any>("");
 
   useEffect(() => {
+    setHour(date.format(rightNow, "HH"));
+    setMinute(date.format(rightNow, "mm"));
+    setDate(date.format(rightNow, "eeee, do MMMM yyyy"));
     const dateSet = setInterval(() => {
       setHour(date.format(rightNow, "HH"));
       setMinute(date.format(rightNow, "mm"));
