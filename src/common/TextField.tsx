@@ -1,3 +1,4 @@
+"use client";
 import { TextField } from "@mui/material";
 import { Controller, Control, FieldValues } from "react-hook-form";
 
