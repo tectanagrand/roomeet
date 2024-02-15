@@ -20,8 +20,7 @@ export default function BookForm() {
       agenda: "",
     },
   });
-  const onSubmit = (values: object) => (e: BaseSyntheticEvent) => {
-    e.preventDefault();
+  const onSubmit = (values: object) => {
     console.log(values);
   };
   const handleSubmit = form.handleSubmit;
@@ -31,9 +30,10 @@ export default function BookForm() {
   const [roomId, setRoomid] = useState<string>("");
   const settings = {
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    variableWidth: true,
   };
 
   const selectRoom = (idRoom: string) => {
@@ -61,7 +61,6 @@ export default function BookForm() {
             name="endTime"
             label="End Time"
             control={form.control}
-            rules={{ required: "This field is required" }}
             disabled={true}
             sx={{
               "&.Mui-disabled": {
@@ -91,7 +90,7 @@ export default function BookForm() {
         </div>
         <Slider {...settings}>
           {room.map((item) => (
-            <div className="py-4" key={item.id}>
+            <div className="py-4 pt-6" key={item.id}>
               <CardRoom
                 roomInfo={item}
                 selectedId={roomId}
