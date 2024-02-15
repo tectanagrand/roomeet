@@ -7,7 +7,7 @@ interface DatePickerProps {
   name: string;
   label: string;
   control: Control<any> | undefined;
-  rules: object;
+  rules?: object;
   disabled?: boolean;
   sx?: object;
 }
