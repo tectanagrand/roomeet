@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import theme from "./theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import AuthProvider from "@/components/auth/AuthProvider";
 
 export default function MainLayout({
   children,
@@ -12,21 +13,23 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <html>
-          <body className="text-neutral-50 line-clamp-none">
-            <div className="max-w-[480px] mx-auto bg-neutral-800 md:shadow-md min-h-screen relative">
-              <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  {children}
-                </LocalizationProvider>
-              </AppRouterCacheProvider>
-            </div>
-          </body>
-        </html>
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <AuthProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <html>
+            <body className="text-neutral-50 line-clamp-none">
+              <div className="max-w-[480px] mx-auto bg-neutral-800 md:shadow-md min-h-screen relative">
+                <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    {children}
+                  </LocalizationProvider>
+                </AppRouterCacheProvider>
+              </div>
+            </body>
+          </html>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </AuthProvider>
   );
 }
