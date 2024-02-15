@@ -5,7 +5,7 @@ import {
   BookmarkIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Popover, Box } from "@mui/material";
+import { Button, Popover, Box, Avatar } from "@mui/material";
 import ButtonCard from "@/common/ButtonCard";
 import { useState } from "react";
 
@@ -67,7 +67,7 @@ const AppBar = () => {
             </>
           )}
           <p className="font-semibold grow md:text-center">ROOMEET</p>
-          <div className="h-4 w-4 bg-neutral-600 rounded-full"></div>
+          <Avatar className="h-8 w-8 bg-neutral-600 rounded-full" />
         </div>
       </div>
     </div>
