@@ -7,13 +7,31 @@ import { BaseSyntheticEvent } from "react";
 import { signIn } from "next-auth/react";
 // import { ToastContainer, toast, Zoom } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
+import { useSWReg } from "@/lib/provider/SWRegProvider";
 
 interface LoginInput {
   username: string;
   password: string;
 }
 
+const base64ToUint8Array = (base64: any) => {
+  console.log(base64);
+  const padding = "=".repeat((4 - (base64.length % 4)) % 4);
+  const b64 = (base64 + padding).replace(/-/g, "+").replace(/_/g, "/");
+  console.log(b64);
+
+  const rawData = window.atob(b64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+};
+
 export default function LoginPage() {
+  const SW = useSWReg();
+  const SWReg = SW?.SWReg;
   const { control, handleSubmit } = useForm({
     defaultValues: {
       username: "",
@@ -22,10 +40,17 @@ export default function LoginPage() {
   });
 
   const loginUser = async (values: LoginInput) => {
-    console.log(values);
+    const sub = await SWReg?.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: base64ToUint8Array(
+        process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY
+      ),
+    });
+    console.log(sub);
     const res = await signIn("credentials", {
       username: values.username,
       password: values.password,
+      subscription: JSON.stringify({ sub }),
       callbackUrl: "/",
       redirect: false,
     });

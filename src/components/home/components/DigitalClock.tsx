@@ -6,22 +6,25 @@ export default function DigitalClock() {
   const rightNow = new Date();
   const [hour, setHour] = useState<any>("");
   const [minute, setMinute] = useState<any>("");
+  const [second, setSecond] = useState<any>("");
   const [dateNow, setDate] = useState<any>("");
 
   useEffect(() => {
-    setHour(date.format(rightNow, "HH"));
-    setMinute(date.format(rightNow, "mm"));
-    setDate(date.format(rightNow, "eeee, do MMMM yyyy"));
+    // setHour(date.format(rightNow, "HH"));
+    // setMinute(date.format(rightNow, "mm"));
+    // setSecond(date.format(rightNow, "ss"));
+    // setDate(date.format(rightNow, "eeee, do MMMM yyyy"));
     const dateSet = setInterval(() => {
       setHour(date.format(rightNow, "HH"));
       setMinute(date.format(rightNow, "mm"));
+      setSecond(date.format(rightNow, "ss"));
       setDate(date.format(rightNow, "eeee, do MMMM yyyy"));
     }, 1000);
 
     return () => {
       clearInterval(dateSet);
     };
-  }, []);
+  }, [hour, minute, second]);
 
   return (
     <div className="flex flex-col my-2">
@@ -37,6 +40,10 @@ export default function DigitalClock() {
         <p className="text-[64pt] text-center text-neutral-50 w-32 my-0">
           {minute}
         </p>
+        {/* <p className="text-[64pt] text-center text-neutral-50 my-0">:</p>
+        <p className="text-[64pt] text-center text-neutral-50 w-32 my-0">
+          {second}
+        </p> */}
       </div>
     </div>
   );

@@ -43,17 +43,17 @@ const NavButton = () => {
           <ButtonCard
             name="Home"
             icon={<HomeIcon className="text-neutral-100" />}
-            link="/"
+            link="/dashboard"
           />
           <ButtonCard
             name="List Book"
             icon={<BookmarkIcon className="text-neutral-100" />}
-            link="#"
+            link="/dashboard/booklist"
           />
           <ButtonCard
             name="New Book"
             icon={<PlusIcon className="text-neutral-100" />}
-            link="/book"
+            link="/dashboard/book"
           />
         </Box>
       </Popover>

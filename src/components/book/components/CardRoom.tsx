@@ -4,6 +4,9 @@ import MiniBadge from "@/common/MiniBadge";
 import clsx from "clsx";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, createRef, useLayoutEffect } from "react";
+import useSWR from "swr";
+import Slider from "react-slick";
+import { CardsBookSkeleton } from "@/common/skeletons/CardSkeleton";
 
 interface RoomInfo {
   id: string;
@@ -14,12 +17,30 @@ interface RoomInfo {
   image: string;
 }
 
+interface RoomData {
+  id: string;
+  id_ruangan: string;
+  nama: string;
+  kapasitas: string;
+  lokasi: string;
+  image: string;
+  fasilitas: Array<string>;
+}
+
 interface CardProp {
   roomInfo: RoomInfo;
   selectedId: string;
   clickCard: (id: string) => void;
   error: boolean;
 }
+
+const settings = {
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  variableWidth: true,
+};
 
 export const CardRoom = ({
   roomInfo,
@@ -73,5 +94,51 @@ export const CardRoom = ({
         </div>
       </Button>
     </Badge>
+  );
+};
+
+export const CardRooms = ({
+  selectedId,
+  clickCard,
+  errorData,
+}: {
+  selectedId: string;
+  clickCard: (id: string) => void;
+  errorData: boolean;
+}) => {
+  const {
+    data: rooms,
+    error,
+    isLoading,
+  } = useSWR("/room/fas", { suspense: true, fallback: { "/room/fas": [] } });
+  const roomData: Array<RoomInfo> = rooms?.data?.map((item: RoomData) => {
+    return {
+      id: item.id_ruangan,
+      name: item.nama,
+      capacity: item.kapasitas,
+      location: item.lokasi,
+      facility: item.fasilitas,
+      image: item.image,
+    };
+  });
+
+  return (
+    <>
+      {!isLoading && (
+        <Slider {...settings}>
+          {roomData?.map((item) => (
+            <div className="py-4 pt-6" key={item.id}>
+              <CardRoom
+                roomInfo={item}
+                selectedId={selectedId}
+                clickCard={clickCard}
+                error={errorData}
+              />
+            </div>
+          ))}
+        </Slider>
+      )}
+      {isLoading && <CardsBookSkeleton />}
+    </>
   );
 };

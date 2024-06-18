@@ -65,12 +65,12 @@ const AppBar = () => {
                   <ButtonCard
                     name="List Book"
                     icon={<BookmarkIcon className="text-neutral-100" />}
-                    link="#"
+                    link="/dashboard/booklist"
                   />
                   <ButtonCard
                     name="New Book"
                     icon={<PlusIcon className="text-neutral-100" />}
-                    link="dashboard/book"
+                    link="/dashboard/book"
                   />
                 </Box>
               </Popover>

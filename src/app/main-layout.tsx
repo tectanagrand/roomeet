@@ -6,6 +6,7 @@ import theme from "./theme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import AuthProvider from "@/components/auth/AuthProvider";
+import SWRegProvider from "@/lib/provider/SWRegProvider";
 
 export default function MainLayout({
   children,
@@ -14,22 +15,24 @@ export default function MainLayout({
 }) {
   return (
     <AuthProvider>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <html>
-            <body className="text-neutral-50 line-clamp-none">
-              <div className="max-w-[480px] mx-auto bg-neutral-800 md:shadow-md min-h-screen relative">
-                <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    {children}
-                  </LocalizationProvider>
-                </AppRouterCacheProvider>
-              </div>
-            </body>
-          </html>
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <SWRegProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <html>
+              <body className="text-neutral-50 line-clamp-none">
+                <div className="max-w-[480px] mx-auto bg-neutral-800 md:shadow-md min-h-screen relative">
+                  <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      {children}
+                    </LocalizationProvider>
+                  </AppRouterCacheProvider>
+                </div>
+              </body>
+            </html>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </SWRegProvider>
     </AuthProvider>
   );
 }

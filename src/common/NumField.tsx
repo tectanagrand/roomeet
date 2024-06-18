@@ -13,11 +13,9 @@ interface TextFieldProp {
   toUpperCase?: boolean;
   toLowerCase?: boolean;
   numericInput?: boolean;
-  multiline?: boolean;
-  rows?: number;
 }
 
-export const TextFieldComp = ({
+export const NumFieldComp = ({
   control,
   label,
   name,
@@ -28,8 +26,6 @@ export const TextFieldComp = ({
   toUpperCase,
   toLowerCase,
   numericInput,
-  multiline,
-  rows,
 }: TextFieldProp) => {
   return (
     <>
@@ -43,6 +39,7 @@ export const TextFieldComp = ({
           fieldState: { error },
         }) => (
           <TextField
+            type="number"
             helperText={error ? error.message : null}
             error={!!error}
             onChange={(e) => {
@@ -63,8 +60,6 @@ export const TextFieldComp = ({
             value={value}
             label={label}
             variant="outlined"
-            multiline={multiline}
-            rows={rows}
             inputProps={{
               readOnly: readOnly,
               inputMode: numericInput ? "numeric" : "text",

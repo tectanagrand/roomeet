@@ -50,7 +50,7 @@ const CalendarEvent = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto pt-6">
+    <div className="max-w-md mx-auto">
       <div className="p-4 rounded-md ">
         <div className="flex items-center">
           <h2 className="flex-auto font-semibold text-lg text-neutral-50">

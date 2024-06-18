@@ -10,6 +10,8 @@ interface DatePickerProps {
   rules?: object;
   disabled?: boolean;
   sx?: object;
+  valueOvr?: Date;
+  onChangeOvr?: (value: any) => void;
 }
 
 export default function TimePickerComp({
@@ -19,17 +21,28 @@ export default function TimePickerComp({
   rules,
   disabled,
   sx,
+  valueOvr,
+  onChangeOvr,
 }: DatePickerProps) {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
+      defaultValue={valueOvr}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TimePicker
-          onChange={onChange}
-          sx={{ ...sx, width: "100%" }}
-          value={new Date(value)}
+          onChange={(e) => {
+            if (onChangeOvr) {
+              onChangeOvr(e);
+            }
+            onChange(e);
+          }}
+          sx={{
+            ...sx,
+            width: "100%",
+          }}
+          value={valueOvr ? valueOvr : value}
           label={label}
           format="HH:mm"
           disabled={disabled}

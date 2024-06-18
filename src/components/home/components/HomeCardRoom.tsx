@@ -6,22 +6,41 @@ import {
   InformationCircleIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Tooltip } from "@mui/material";
+import { Button, ListItem, Tooltip } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
+import { CardsSkeleton } from "@/common/skeletons/CardSkeleton";
+import useSWR from "swr";
+import Slider from "react-slick";
 
 interface RoomInfo {
   id: string;
   name: string;
   capacity: number;
   location: string;
-  facility: Array<string>;
   image: string;
+}
+
+interface RoomsData {
+  id: string;
+  id_ruangan: string;
+  kapasitas: number;
+  lokasi: string;
+  nama: string;
 }
 
 interface CardProp {
   roomInfo: RoomInfo;
 }
+
+const settings = {
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  variableWidth: true,
+};
 
 const CardRoom = ({ roomInfo }: CardProp) => {
   return (
@@ -78,4 +97,40 @@ const CardRoom = ({ roomInfo }: CardProp) => {
   );
 };
 
-export default CardRoom;
+export const CardRooms = ({ hours }: { hours?: string }) => {
+  const url = `/room/avai?hours=${hours}`;
+  console.log(url);
+  const {
+    data: rooms,
+    error,
+    isLoading,
+  } = useSWR(url, {
+    fallback: { url: [] },
+  });
+  console.log(rooms);
+  let roomData = [];
+  if (!isLoading) {
+    roomData = rooms?.data?.map((item: RoomsData) => ({
+      id: item.id,
+      name: item.nama,
+      capacity: item.kapasitas,
+      location: item.lokasi,
+      image:
+        "https://images.unsplash.com/photo-1576073460027-794a4ab09b12?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWVldGluZyUyMHJvb218ZW58MHx8MHx8fDA%3D",
+    }));
+  }
+  return (
+    <>
+      {!isLoading && roomData.length !== 0 && (
+        <Slider {...settings}>
+          {roomData.map((item: RoomInfo) => (
+            <div key={item.id}>
+              <CardRoom roomInfo={item} />
+            </div>
+          ))}
+        </Slider>
+      )}
+      {(isLoading || roomData.length === 0) && <CardsSkeleton />}
+    </>
+  );
+};

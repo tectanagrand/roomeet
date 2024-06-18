@@ -9,11 +9,13 @@ const handler = NextAuth({
       credentials: {
         username: { type: "text" },
         password: { type: "password" },
+        subscription: { type: "object" },
       },
       async authorize(credentials, req) {
-        const auth = await axios.post(`${process.env.APPURL}/api/user/login`, {
+        const auth = await axios.post(`${process.env.APPURL}/user/login`, {
           username: credentials?.username,
           password: credentials?.password,
+          subscription: credentials?.subscription,
         });
         if (auth.status === 200) {
           const user = auth.data.data;
@@ -27,8 +29,8 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
-      return { ...token, ...account };
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
     async session({ session, token }) {
       session.user = token as any;

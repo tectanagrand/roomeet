@@ -126,7 +126,7 @@ const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          height: "3.5rem",
+          minHeight: "3.5rem",
           "&.Mui-disabled": {
             "& svg": { color: palette.text.disabled },
           },
@@ -218,6 +218,13 @@ const theme = createTheme({
             color: "#ffffff",
             borderColor: "#ffffff",
           },
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        popper: {
+          zIndex: 3000,
         },
       },
     },
