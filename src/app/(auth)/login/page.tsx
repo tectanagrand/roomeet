@@ -2,8 +2,8 @@
 import { PasswordWithEyes } from "@/common/PasswordWithEyes";
 import { TextFieldComp } from "@/common/TextField";
 import { useForm } from "react-hook-form";
-import { Button } from "@mui/material";
-import { BaseSyntheticEvent } from "react";
+import { Button, CircularProgress } from "@mui/material";
+import { BaseSyntheticEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 // import { ToastContainer, toast, Zoom } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
@@ -30,6 +30,8 @@ const base64ToUint8Array = (base64: any) => {
 };
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
+
   const SW = useSWReg();
   const SWReg = SW?.SWReg;
   const { control, handleSubmit } = useForm({
@@ -40,6 +42,7 @@ export default function LoginPage() {
   });
 
   const loginUser = async (values: LoginInput) => {
+    setLoading(true);
     const sub = await SWReg?.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: base64ToUint8Array(
@@ -54,6 +57,7 @@ export default function LoginPage() {
       callbackUrl: "/",
       redirect: false,
     });
+    setLoading(false);
     if (res?.status === 200) {
       toast.success("✅ Login Success");
     } else if (res?.status === 401) {
@@ -86,9 +90,14 @@ export default function LoginPage() {
           />
         </div>
         <div className="flex justify-end">
+          {loading ? (
+            <CircularProgress />
+
+          ) : (
           <Button type="submit" className="btn-primary">
             Login
           </Button>
+          )}
         </div>
       </form>
       <Toaster />
