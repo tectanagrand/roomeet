@@ -6,6 +6,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 import { MouseEventHandler, SyntheticEvent, useState } from "react";
@@ -68,6 +69,7 @@ export const PasswordWithEyes = ({
               }
               label={label}
             />
+            {error && <FormHelperText error>{error.message}</FormHelperText>}
           </FormControl>
         )}
       />
