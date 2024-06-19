@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 // import { ToastContainer, toast, Zoom } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
 import { useSWReg } from "@/lib/provider/SWRegProvider";
+import { useRouter } from "next/navigation";
 
 interface LoginInput {
   username: string;
@@ -30,6 +31,7 @@ const base64ToUint8Array = (base64: any) => {
 };
 
 export default function LoginPage() {
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
 
   const SW = useSWReg();
@@ -57,14 +59,14 @@ export default function LoginPage() {
       callbackUrl: "/",
       redirect: false,
     });
-    setLoading(false);
     if (res?.status === 200) {
-      toast.success("✅ Login Success");
+      router.push("/dashboard");
     } else if (res?.status === 401) {
       toast.error("❌ Credentials not match");
     } else {
       toast.error("❌ Failed to login");
     }
+    setLoading(false);
   };
 
   return (
@@ -92,11 +94,10 @@ export default function LoginPage() {
         <div className="flex justify-end">
           {loading ? (
             <CircularProgress />
-
           ) : (
-          <Button type="submit" className="btn-primary">
-            Login
-          </Button>
+            <Button type="submit" className="btn-primary">
+              Login
+            </Button>
           )}
         </div>
       </form>
