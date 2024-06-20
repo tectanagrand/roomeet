@@ -31,7 +31,7 @@ const base64ToUint8Array = (base64: any) => {
 };
 
 export default function LoginPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const SW = useSWReg();
@@ -47,9 +47,7 @@ export default function LoginPage() {
     setLoading(true);
     const sub = await SWReg?.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: base64ToUint8Array(
-        process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY
-      ),
+      applicationServerKey: base64ToUint8Array(process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY),
     });
     console.log(sub);
     const res = await signIn("credentials", {
@@ -60,7 +58,7 @@ export default function LoginPage() {
       redirect: false,
     });
     if (res?.status === 200) {
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } else if (res?.status === 401) {
       toast.error("❌ Credentials not match");
     } else {
