@@ -83,10 +83,10 @@ const CardRoom = ({ roomInfo }: CardProp) => {
           </div>
         </div>
         <div className="flex justify-between items-center gap-2 ">
-          <Link href="/book" className="grow">
+          <Link href="dashboard/book" className="grow">
             <Button className="w-full btn-primary">Book</Button>
           </Link>
-          <Link href="/room" className="h-10 w-10 ">
+          <Link href="dashboard/room" className="h-10 w-10 ">
             <Button className="w-full h-10 p-0 btn-primary">
               <InformationCircleIcon />
             </Button>
