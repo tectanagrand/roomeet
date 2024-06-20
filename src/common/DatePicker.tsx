@@ -10,12 +10,7 @@ interface DatePickerProps {
   rules: object;
 }
 
-export default function DatePickerComp({
-  name,
-  label,
-  control,
-  rules,
-}: DatePickerProps) {
+export default function DatePickerComp({ name, label, control, rules }: DatePickerProps) {
   return (
     <Controller
       control={control}
@@ -30,6 +25,7 @@ export default function DatePickerComp({
           slotProps={{
             textField: { error: !!error, helperText: error?.message },
           }}
+          disablePast
         />
       )}
     ></Controller>
