@@ -44,6 +44,8 @@ export default function TimePickerComp({
           }}
           value={valueOvr ? valueOvr : value}
           label={label}
+          ampm={false}
+          disablePast
           format="HH:mm"
           disabled={disabled}
           slotProps={{
