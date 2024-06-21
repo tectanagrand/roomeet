@@ -8,11 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import AuthProvider from "@/components/auth/AuthProvider";
 import SWRegProvider from "@/lib/provider/SWRegProvider";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       <SWRegProvider>
@@ -20,7 +16,7 @@ export default function MainLayout({
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <html>
-              <body className="text-neutral-50 line-clamp-none">
+              <body className="text-neutral-50 line-clamp-none bg-neutral-800">
                 <div className="max-w-[480px] mx-auto bg-neutral-800 md:shadow-md min-h-screen relative">
                   <AppRouterCacheProvider options={{ enableCssLayer: true }}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
