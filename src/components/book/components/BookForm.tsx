@@ -58,6 +58,7 @@ export default function BookForm({ bookpar }: { bookpar: string[] }) {
       id_user: data?.user.id_user,
       book_date: format(values.dateBook, "Y-L-d"),
       time_start: format(values.startTime as Date, "HH:mm"),
+      time_end: format(values.endTime as Date, "HH:mm"),
       duration: values.durationHour,
       agenda: values.agenda,
       participant: values.capacity,
