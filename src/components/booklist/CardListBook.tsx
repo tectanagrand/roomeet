@@ -127,7 +127,7 @@ export function CardsListBook() {
     <>
       {!isLoading &&
         agendasData &&
-        agendasData.map((item) => <CardListBook {...item} />)}
+        agendasData.map((item) => <CardListBook {...item} key={item.id_book + item.id_room} />)}
       {isLoading && !agendasData && <CardsListBookSkeleton />}
     </>
   );
